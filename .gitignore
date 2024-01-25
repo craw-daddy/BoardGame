@@ -4,6 +4,7 @@ __pycache__/
 data/
 USERS/
 GEEKBUDDIES/
+BGG_GAMES/
 
 poetry.lock
 
