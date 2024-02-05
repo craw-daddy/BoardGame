@@ -1,17 +1,12 @@
-import re
-import time
-
 import pandas as pd
 import numpy as np
-
+import re
 import requests
-from bs4 import BeautifulSoup
-import lxml
-
 import dill
 import glob
 import os
 
+from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 
 from constants import BASE_API, USER_DATA, GEEKBUDDIES_DATA
