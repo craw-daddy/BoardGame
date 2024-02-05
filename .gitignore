@@ -1,7 +1,7 @@
 .ipynb_checkpoints/
 __pycache__/
 
-data/
+EXTRA_DATA/
 USERS/
 GEEKBUDDIES/
 BGG_GAMES/
