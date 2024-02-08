@@ -1,10 +1,11 @@
 .ipynb_checkpoints/
 __pycache__/
 
-EXTRA_DATA/
-USERS/
-GEEKBUDDIES/
 BGG_GAMES/
+EXTRA_DATA/
+GEEKBUDDIES/
+USERS/
+BACKUPS/
 
 poetry.lock
 
