@@ -141,7 +141,7 @@ def _cleanGameItem(response):
         results['maxplaytime'] = np.nan
     try:
         results['averating'] = float(response.find('average').attrs['value'])
-    except AttributeError:
+    except (AttributeError, ValueError):
         results['averating'] = np.nan
     try:
         results['bayesaverage'] = float(response.find('bayesaverage').attrs['value'])
@@ -206,7 +206,7 @@ def getGame(bggGameId):
             response = BeautifulSoup(get_thing(g, stats=1), 'lxml')
             if response.find('item'):
                 result.append(_cleanGameItem(response.find('item')))
-            time.sleep(1)
+            time.sleep(2)
             
     if result:
         return pd.concat(result)
