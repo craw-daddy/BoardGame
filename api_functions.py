@@ -145,7 +145,7 @@ def _cleanGameItem(response):
         results['averating'] = np.nan
     try:
         results['bayesaverage'] = float(response.find('bayesaverage').attrs['value'])
-    except AttributeError:
+    except (AttributeError, ValueError):
         results['bayesaverage'] = np.nan
     try:
         results['bggrank'] = int([r['value'] for r in response.find_all('rank') 
