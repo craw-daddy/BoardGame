@@ -154,7 +154,7 @@ def _cleanGameItem(response):
         results['bggrank'] = np.nan
     try:
         results['averageweight'] = float(response.find('averageweight').attrs['value'])
-    except AttributeError:
+    except (AttributeError, ValueError):
         results['averageweight'] = np.nan
     results['categories'] = [c['value'] for c in response.find_all('link') 
                              if c['type'] == 'boardgamecategory']
@@ -170,7 +170,10 @@ def _cleanGameItem(response):
                             if c['type'] == 'boardgamepublisher']
     results['expansions'] = [int(c['id']) for c in response.find_all('link')
                              if c['type'] == 'boardgameexpansion']
-    results['numratings'] = int(response.find('usersrated').attrs['value'])
+    try:
+        results['numratings'] = int(response.find('usersrated').attrs['value'])
+    except ValueError:
+        results['numratings'] = 0
 
     return pd.DataFrame([results]).set_index('id')  
 
