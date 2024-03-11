@@ -1,4 +1,5 @@
 .ipynb_checkpoints/
+.python-version
 __pycache__/
 
 BGG_GAMES/
@@ -6,6 +7,7 @@ EXTRA_DATA/
 GEEKBUDDIES/
 USERS/
 BACKUPS/
+LOGS/
 BoardGame-SNA 
 
 poetry.lock
