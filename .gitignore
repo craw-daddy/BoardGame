@@ -13,3 +13,4 @@ BoardGame-SNA
 poetry.lock
 
 find_new_games_guard.txt
+refresh_games_start.txt
