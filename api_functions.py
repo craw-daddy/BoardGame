@@ -203,7 +203,6 @@ def getGame(bggGameId):
             games = bggGameId
 
         item_numbers = [int(item.attrs['id']) for item in BeautifulSoup(get_thing(games), 'lxml').find_all('item')]
-        time.sleep(1)
         result = []
         for g in item_numbers:
             response = BeautifulSoup(get_thing(g, stats=1), 'lxml')
