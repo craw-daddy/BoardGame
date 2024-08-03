@@ -289,7 +289,7 @@ class User():
         if error:
             return f'{error.text}'
         
-        buddies = [(item.get('name'), item.get('id')) for item in BeautifulSoup(result.text).find_all('buddy')]
+        buddies = [(item.get('name'), item.get('id')) for item in BeautifulSoup(result.text, features='lxml').find_all('buddy')]
 
         #  Let's save the list of geekbuddies once we have it 
         #  First remove any previous versions for this user
