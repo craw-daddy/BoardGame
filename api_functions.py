@@ -38,12 +38,15 @@ def get_thing(id, **args):
        done is to remove the newline and tab characters from 
        the string.  
     '''
-    
-    url = f'{BASE_API}/thing?id=' + str(id).strip()
+   
+    url = f'{BASE_API}/thing?'
     for (k,v) in args.items():   #  Add the arbitrary (key,value) 
                                  #  pairs passed to the query string.
-        url += '&' + str(k) + '=' + str(v)
+        url += str(k) + '=' + str(v) + '&'
         
+    url = url + 'id=' + str(id).strip()
+    print(url, '\n\n\n')
+
     r = requests.get(url)
     if r.status_code == 404:
         return None
@@ -171,7 +174,8 @@ def _cleanGameItem(response):
     results['expansions'] = [int(c['id']) for c in response.find_all('link')
                              if c['type'] == 'boardgameexpansion']
     try:
-        results['numratings'] = int(response.find('usersrated').attrs['value'])
+        if response.find('usersrated'):
+            results['numratings'] = int(response.find('usersrated').attrs['value'])
     except ValueError:
         results['numratings'] = 0
 
@@ -196,12 +200,12 @@ def getGame(bggGameId):
             return None
     elif isinstance(bggGameId, (str, list, range)):  #  Assumes a comma-separated string
         if isinstance(bggGameId, str):
-            games = [int(x) for x in bggGameId.split(',')]
-        elif isinstance(bggGameId, range):
+            games = ','.join([x.strip() for x in bggGameId.split(',')])
+        elif isinstance(bggGameId, (list,range)):
             games = list(bggGameId)
-        else:
-            games = bggGameId
+            games = ''.join(str(x) for x in bggGameID)
 
+        print('\n\n\n\n', games,'\n\n\n')
         item_numbers = [int(item.attrs['id']) for item in BeautifulSoup(get_thing(games), 'lxml').find_all('item')]
         result = []
         for g in item_numbers:
