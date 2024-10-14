@@ -10,7 +10,7 @@ import dill
 
 from bs4 import BeautifulSoup
 
-from constants import BASE_API, EXTRA_DATA
+from constants import BASE_API, EXTRA_DATA, SLEEP_DELAY
 
 #  Filter out some annoying warnings from the latest version of BeautifulSoup
 import warnings
@@ -45,7 +45,6 @@ def get_thing(id, **args):
         url += str(k) + '=' + str(v) + '&'
         
     url = url + 'id=' + str(id).strip()
-    print(url, '\n\n\n')
 
     r = requests.get(url)
     if r.status_code == 404:
@@ -203,16 +202,15 @@ def getGame(bggGameId):
             games = ','.join([x.strip() for x in bggGameId.split(',')])
         elif isinstance(bggGameId, (list,range)):
             games = list(bggGameId)
-            games = ''.join(str(x) for x in bggGameID)
+            games = ','.join(str(x) for x in bggGameId)
 
-        print('\n\n\n\n', games,'\n\n\n')
         item_numbers = [int(item.attrs['id']) for item in BeautifulSoup(get_thing(games), 'lxml').find_all('item')]
         result = []
         for g in item_numbers:
             response = BeautifulSoup(get_thing(g, stats=1), 'lxml')
             if response.find('item'):
                 result.append(_cleanGameItem(response.find('item')))
-            time.sleep(2)
+            time.sleep(SLEEP_DELAY)
             
     if result:
         return pd.concat(result)

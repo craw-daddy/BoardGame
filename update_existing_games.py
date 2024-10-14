@@ -13,11 +13,11 @@ import numpy as np
 
 from datetime import datetime
 
-from constants import GAME_DATA
+from constants import GAME_DATA, SLEEP_DELAY
 from api_functions import getGame
 
-WINDOW = 10000
-STEP_SIZE = 100
+WINDOW = 1500
+STEP_SIZE = 5 
 
 if __name__ == '__main__':
     game_file = sorted(glob.glob(f'{GAME_DATA}/all-to-*.dill'), key=lambda x: int(re.search(r'[\d]+',x).group(0)))[-1]
@@ -40,7 +40,7 @@ if __name__ == '__main__':
         games = getGame(to_update[index:index+STEP_SIZE])
         if games is not None:
             result.append(games)
-        time.sleep(4)
+        time.sleep(SLEEP_DELAY)
     
     end_time = datetime.now()
     print(f'End time: {end_time}')
