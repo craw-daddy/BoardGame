@@ -28,7 +28,7 @@ if __name__ == '__main__':
         limit = int(f.readline())
 
     rest = pd.Index(range(1, limit)).difference(all_games.index).tolist()
-    step_size = 100
+    step_size = 50
     new_found = []
     start = datetime.now()
     print('----------------------')
