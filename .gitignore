@@ -10,7 +10,5 @@ BACKUPS/
 LOGS/
 BoardGame-SNA 
 
-poetry.lock
-
 find_new_games_guard.txt
 update_existing_games_start.txt
