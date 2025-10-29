@@ -10,12 +10,7 @@ import os
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 
-from constants import BASE_API, USER_DATA, GEEKBUDDIES_DATA
-
-with open('TOKENS/bgg-token.txt', 'r') as f:
-    AUTHORIZATION_TOKEN = f.readline().strip()
-
-AUTHORIZATION_DICT = { 'Authorization:' : f'{Bearer {AUTHORIZATION_TOKEN}}'}
+from constants import BASE_API, USER_DATA, GEEKBUDDIES_DATA, AUTHORIZATION_DICT
 
 #  Filter out some annoying warnings from the latest version of BeautifulSoup
 import warnings

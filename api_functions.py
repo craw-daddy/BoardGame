@@ -10,13 +10,7 @@ import dill
 
 from bs4 import BeautifulSoup
 
-from constants import BASE_API, EXTRA_DATA, SLEEP_DELAY
-
-with open('TOKENS/bgg-token.txt', 'r') as f:
-    AUTHORIZATION_TOKEN = f.readline().strip()
-
-AUTHORIZATION_DICT = {'Authorization:' :f'Bearer {AUTHORIZATION_TOKEN}'}
-
+from constants import BASE_API, EXTRA_DATA, SLEEP_DELAY, AUTHORIZATION_DICT
 
 #  Filter out some annoying warnings from the latest version of BeautifulSoup
 import warnings
