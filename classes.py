@@ -12,6 +12,11 @@ from datetime import datetime, timedelta
 
 from constants import BASE_API, USER_DATA, GEEKBUDDIES_DATA
 
+with open('TOKENS/bgg-token.txt', 'r') as f:
+    AUTHORIZATION_TOKEN = f.readline().strip()
+
+AUTHORIZATION_DICT = { 'Authorization:' : f'{Bearer {AUTHORIZATION_TOKEN}}'}
+
 #  Filter out some annoying warnings from the latest version of BeautifulSoup
 import warnings
 from bs4.builder import XMLParsedAsHTMLWarning
@@ -61,7 +66,7 @@ def get_collection(bggUserName, cutoff=timedelta(days=7)):
                       'subtype=boardgameexpansion']:
         url = f'{BASE_API}/collection?username={bggUserName.strip()}&{game_type}&stats=1'
 
-        r = requests.get(url)
+        r = requests.get(url, headers=AUTHORIZATION_DICT)
         if r.status_code == 404:
             return 'Page not found'
         else:
@@ -70,7 +75,7 @@ def get_collection(bggUserName, cutoff=timedelta(days=7)):
                             ## must check for a 202 code, and sleep 
                             ## and try again if necessary.  
                 time.sleep(12)
-                r = requests.get(url)
+                r = requests.get(url, headers=AUTHORIZATION_DICT)
             initial_res = re.sub('[\n\t]', '', r.text)
             #  Check if there was an error from BGG, such as 
             #  an invalid username.  Return the error message if found.  
@@ -284,7 +289,7 @@ class User():
 
         #  Otherwise, make the call to retrieve and store this information.
         url = f'{BASE_API}/users?name={self.bggUserName}&buddies=1'
-        result = requests.get(url)
+        result = requests.get(url, headers=AUTHORIZATION_DICT)
         error = BeautifulSoup(result.text, 'lxml').find('error')
         if error:
             return f'{error.text}'

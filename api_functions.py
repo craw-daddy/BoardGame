@@ -12,6 +12,12 @@ from bs4 import BeautifulSoup
 
 from constants import BASE_API, EXTRA_DATA, SLEEP_DELAY
 
+with open('TOKENS/bgg-token.txt', 'r') as f:
+    AUTHORIZATION_TOKEN = f.readline().strip()
+
+AUTHORIZATION_DICT = {'Authorization:' :f'Bearer {AUTHORIZATION_TOKEN}'}
+
+
 #  Filter out some annoying warnings from the latest version of BeautifulSoup
 import warnings
 from bs4.builder import XMLParsedAsHTMLWarning
@@ -46,7 +52,8 @@ def get_thing(id, **args):
         
     url = url + 'id=' + str(id).strip()
 
-    r = requests.get(url)
+    r = requests.get(url,
+                     headers=AUTHORIZATION_DICT)
     if r.status_code == 404:
         return None
     while r.status_code == 202:
@@ -58,7 +65,8 @@ def get_thing(id, **args):
 def getBGGCategories(save=False):
     '''Retrieve all of the boardgame categories used by BGG for classification.'''
     
-    page = requests.get('https://boardgamegeek.com/browse/boardgamecategory')
+    page = requests.get('https://boardgamegeek.com/browse/boardgamecategory',
+                        headers=AUTHORIZATION_DICT)
     soup = BeautifulSoup(page.text, 'lxml')
     result = []
     for item in soup.findAll('td'):
@@ -80,7 +88,8 @@ def getBGGMechanisms(save=False):
     '''Retrieve all of the boardgame mechanisms used by BGG for classification.'''
     
     mechs = []
-    page = requests.get('https://boardgamegeek.com/browse/boardgamemechanic')
+    page = requests.get('https://boardgamegeek.com/browse/boardgamemechanic',
+                        headers=AUTHORIZATION_DICT)
     soup = BeautifulSoup(re.sub('[\t\n]', '', page.text), 'lxml')
     for item in soup.findAll('td'):
         anchor = item.find('a')
@@ -216,8 +225,5 @@ def getGame(bggGameId):
         return pd.concat(result)
     else:
         return None
-
-
-
 
 
